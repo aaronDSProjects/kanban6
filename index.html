@@ -459,7 +459,7 @@ function applyFilters() {
    ============================================================ */
 function renderCard(task) {
   const id = escapeHtml(task.id);
-  const prio = task.priority.toLowerCase();
+  const prio = escapeHtml(task.priority.toLowerCase());
   const moveOptions = '<option value="">Move ▸</option>' +
     STATUSES.filter(function (s) { return s !== task.status; }).map(function (s) {
       return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + "</option>";
