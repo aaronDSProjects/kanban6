@@ -21,3 +21,7 @@ Single-file IT PMO Kanban demo app: everything lives in `index.html` (markup, `<
 - Add Task flow (`handleSubmit`): validate inline → `addTask()` optimistically → close modal → `notifyNewTask()` in try/catch. A FormSubmit failure only produces a warning toast and must never break the board.
 - Task IDs are `UOB-ITPM-####` from the in-memory `nextTaskNumber` counter, which seed data also consumes (first new task is 1009).
 - Seed due dates are computed relative to today (`dateOffset`) so the Overdue badge demo stays valid; overdue means `dueDate < today` and status ≠ Done.
+
+## Content Security Policy
+
+`index.html` carries a CSP `<meta>` that allows only its own inline `<style>` and `<script>` by SHA-256 hash, plus `connect-src https://formsubmit.co`. After **any** edit to the inline style or script, run `node scripts/csp-hash.js index.html`, or the browser blocks them and the page renders blank/unstyled. Don't add inline `style="..."` attributes or event-handler attributes (blocked by the CSP); set dynamic styles via CSSOM (`el.style.x = ...`) as `applySegmentWidths()` does.

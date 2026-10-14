@@ -3,3 +3,6 @@
 
 # Local-only Claude Code settings
 .claude/settings.local.json
+
+# Third-party skills: restore with `npx skills experimental_install` (see skills-lock.json)
+.claude/skills/
