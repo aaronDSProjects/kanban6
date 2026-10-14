@@ -20,6 +20,8 @@ A single-file Kanban board demo for an IT Project Management Office, built with 
 - **Overdue badge** on any task past its due date that isn't Done (seed dates are computed relative to today, so the demo always has overdue examples).
 - **Inline delete confirmation:** no browser pop-ups.
 - **Optional email notification** for new tasks via [FormSubmit](https://formsubmit.co/).
+- **WhatsApp IT support widget:** a floating button (bottom right) opens a list of common IT support queries (password reset, VPN/Wi-Fi, email, printer, software, phishing, access requests, slow laptop). Picking one opens a WhatsApp chat in a new tab with the message pre-filled.
+- **Security briefing reminder:** a one-time dialog after 10 seconds on the page announces the next company security briefing; it stops appearing after the briefing date.
 
 ## Run locally
 
@@ -40,6 +42,8 @@ const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/YOUR_EMAIL@example.com";
 FormSubmit sends a one-time activation email the first time it is used. While the placeholder address is in place, no request is sent. If the call fails or times out (10 s), the board shows a warning toast and keeps working. At most one notification is sent every 10 seconds.
 
 > ⚠️ Anything you put in this constant is public once pushed to GitHub or served on GitHub Pages.
+
+The WhatsApp support number and the suggested queries are set by `WHATSAPP_NUMBER` and `SUPPORT_QUERIES` in the same script (re-pin the CSP hashes afterwards, see below). The widget only builds `wa.me` links; the page itself sends nothing to WhatsApp.
 
 ## Tech and design constraints
 

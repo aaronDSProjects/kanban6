@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Hardening: only this page's own inline style/script (pinned by hash) may run, and the only
      network destination is FormSubmit. Re-run the CSP hash step after editing the inline style or script. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-qy6d202dzfOwdCBG3pCpsCvZ1VNM/T8UbZyIHnXv4BM='; script-src 'sha256-V66j1VEvlSavNeDNqiuofxoVbOCHigggpdMPkpIpXlQ='; connect-src https://formsubmit.co; img-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-51x5HJwN+Zc2u4NA2RyBqCaE+YqZbZei7Hkk7hmO1/E='; script-src 'sha256-nskz+oNEmiJC5i4seqklvm8VHrZPwzICZ50ptbVexRs='; connect-src https://formsubmit.co; img-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <title>IT PMO – Project Board</title>
 <style>
@@ -338,6 +338,127 @@
   @media (prefers-reduced-motion: reduce) {
     .seg { transition: none; }
   }
+
+  /* ---------- WhatsApp IT support widget ---------- */
+  .wa { --wa-green: #25d366; --wa-green-deep: #128c4b; }
+  .wa-fab {
+    position: fixed;
+    right: var(--s-4);
+    bottom: var(--s-4);
+    width: 56px;
+    height: 56px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--wa-green);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(10,35,66,.35);
+    z-index: 25;
+  }
+  .wa-fab:hover { background: var(--wa-green-deep); }
+  .wa-fab svg { width: 30px; height: 30px; }
+  .wa-panel {
+    position: fixed;
+    right: var(--s-4);
+    bottom: calc(56px + 2 * var(--s-4));
+    width: 340px;
+    max-width: calc(100vw - 2 * var(--s-4));
+    max-height: calc(100vh - 56px - 4 * var(--s-4));
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 28px rgba(10,35,66,.3);
+    overflow: hidden;
+    z-index: 25;
+  }
+  .wa-panel[hidden] { display: none; }
+  .wa-head {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    background: var(--wa-green-deep);
+    color: #fff;
+  }
+  .wa-head h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+  .wa-head p { margin: 0; font-size: .8rem; opacity: .9; }
+  .wa-head > div { flex: 1; }
+  .wa-close {
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    padding: var(--s-1) var(--s-2);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+  .wa-close:hover { background: rgba(255,255,255,.15); }
+  .wa-body { padding: var(--s-3) var(--s-4) var(--s-4); overflow-y: auto; background: var(--mist); }
+  .wa-bubble {
+    margin: 0 0 var(--s-3);
+    padding: var(--s-2) var(--s-3);
+    background: var(--surface);
+    border-radius: 0 var(--radius) var(--radius) var(--radius);
+    font-size: .9rem;
+    box-shadow: 0 1px 2px rgba(10,35,66,.12);
+  }
+  .wa-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+  .wa-list a {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-2) var(--s-3);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: .88rem;
+  }
+  .wa-list a:hover { border-color: var(--wa-green-deep); background: #e9f9ef; }
+  .wa-list a::after { content: "\203A" / ""; margin-left: auto; color: var(--wa-green-deep); font-size: 1.2rem; }
+  .wa-foot { margin: var(--s-3) 0 0; font-size: .75rem; color: var(--ink-soft); text-align: center; }
+  .wa-foot a { color: var(--wa-green-deep); font-weight: 600; }
+  /* Keep toasts clear of the WhatsApp button */
+  .toasts { bottom: calc(56px + 2 * var(--s-4)); }
+/* @hook security-briefing:css:start */
+  /* ---------- Security briefing dialog (source: .claude/hooks/security-briefing.css) ---------- */
+  .briefing {
+    border: 0;
+    border-top: 5px solid var(--st-blocked);
+    border-radius: var(--radius);
+    padding: var(--s-5);
+    width: calc(100% - 2 * var(--s-4));
+    max-width: 440px;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .briefing::backdrop { background: rgba(10,35,66,.6); }
+  .briefing h2 { margin: 0 0 var(--s-3); font-family: var(--font-display); font-weight: 600; color: var(--navy); }
+  .briefing-tag {
+    margin: 0 0 var(--s-1);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--st-blocked-ink);
+  }
+  .briefing-details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-1) var(--s-4);
+    margin: var(--s-4) 0 0;
+    padding: var(--s-3) var(--s-4);
+    background: var(--mist);
+    border-radius: var(--radius-sm);
+  }
+  .briefing-details dt { font-weight: 600; color: var(--ink-soft); }
+  .briefing-details dd { margin: 0; font-weight: 600; }
+/* @hook security-briefing:css:end */
 </style>
 </head>
 <body>
@@ -446,6 +567,27 @@
 
 <!-- ============ Toast region ============ -->
 <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<!-- ============ WhatsApp IT support widget ============ -->
+<div class="wa">
+  <section class="wa-panel" id="waPanel" role="dialog" aria-labelledby="waTitle" hidden>
+    <header class="wa-head">
+      <div>
+        <h2 id="waTitle">IT Support</h2>
+        <p>Chat with us on WhatsApp</p>
+      </div>
+      <button type="button" class="wa-close" id="waClose" aria-label="Close IT support chat">&times;</button>
+    </header>
+    <div class="wa-body">
+      <p class="wa-bubble">Hi! 👋 What do you need help with? Pick a topic to start a WhatsApp chat with IT Support.</p>
+      <ul class="wa-list" id="waList"></ul>
+      <p class="wa-foot">Something else? <a id="waOther" target="_blank" rel="noopener noreferrer">Start a chat</a></p>
+    </div>
+  </section>
+  <button type="button" class="wa-fab" id="waFab" aria-label="Open WhatsApp IT support" aria-expanded="false" aria-controls="waPanel">
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.3.6 4.5 1.8 6.5L3 29l6.9-1.8c1.9 1 4 1.6 6.1 1.6 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.5c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.1 1.1-4-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.3 10 10.1 5.3 16 5.3s10.7 4.7 10.7 10.6S21.9 26.5 16 26.5zm5.9-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2.1-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg>
+  </button>
+</div>
 
 <!--
   FormSubmit requires a ONE-TIME ACTIVATION: the first submission sent to a new
@@ -1083,10 +1225,127 @@ function init() {
   document.getElementById("fPriority").insertAdjacentHTML("beforeend", optionsHtml(PRIORITIES));
   state.tasks = seedTasks();
   initEvents();
+  initWhatsApp();
   renderBoard();
 }
 
+/* ============================================================
+   WhatsApp IT support widget – opens wa.me in a new tab with a
+   pre-filled message; no data is sent from this page.
+   ============================================================ */
+const WHATSAPP_NUMBER = "6512345678";
+const SUPPORT_QUERIES = [
+  { icon: "🔑", text: "Reset my password / unlock my account" },
+  { icon: "🌐", text: "I can't connect to VPN or Wi-Fi" },
+  { icon: "📧", text: "Outlook / email is not working" },
+  { icon: "🖨️", text: "Printer or scanner issue" },
+  { icon: "💻", text: "Request new software installation" },
+  { icon: "🛡️", text: "Report a suspicious email (phishing)" },
+  { icon: "🔐", text: "Request access to a system or shared drive" },
+  { icon: "🐢", text: "My laptop is slow or keeps freezing" }
+];
+
+function waLink(message) {
+  return "https://wa.me/" + WHATSAPP_NUMBER + (message ? "?text=" + encodeURIComponent(message) : "");
+}
+
+function initWhatsApp() {
+  const fab = document.getElementById("waFab");
+  const panel = document.getElementById("waPanel");
+
+  document.getElementById("waList").innerHTML = SUPPORT_QUERIES.map(function (q) {
+    const href = waLink("Hi IT Support, I need help with: " + q.text);
+    return '<li><a href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' +
+      '<span aria-hidden="true">' + q.icon + "</span>" + escapeHtml(q.text) + "</a></li>";
+  }).join("");
+  document.getElementById("waOther").href = waLink("Hi IT Support, I need help with ");
+
+  function setOpen(open) {
+    panel.hidden = !open;
+    fab.setAttribute("aria-expanded", String(open));
+    if (open) panel.querySelector(".wa-list a").focus();
+  }
+
+  fab.addEventListener("click", function () { setOpen(panel.hidden); });
+  document.getElementById("waClose").addEventListener("click", function () { setOpen(false); fab.focus(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !panel.hidden) { setOpen(false); fab.focus(); }
+  });
+  document.addEventListener("click", function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && !fab.contains(e.target)) setOpen(false);
+  });
+}
+
 init();
+/* @hook security-briefing:js:start */
+/* ============================================================
+   Security briefing reminder (source: .claude/hooks/security-briefing.js)
+   Shown once per page load after 10 s of visible time on the page.
+   Inlined into index.html by .claude/hooks/inline-security-briefing.js;
+   edit this file, not the copy in index.html.
+   ============================================================ */
+(function () {
+  const BRIEFING = {
+    date: "2026-10-19",                    // Monday after the reminder went live
+    when: "Monday 19 October, 10:00 AM",
+    where: "Town Hall room"
+  };
+  const DELAY_MS = 10000;
+
+  if (todayString() > BRIEFING.date) return;  // briefing is over, stay quiet
+
+  let visibleMs = 0;
+  let lastTick = Date.now();
+  const timer = setInterval(function () {
+    const now = Date.now();
+    if (document.visibilityState === "visible") visibleMs += now - lastTick;
+    lastTick = now;
+    if (visibleMs < DELAY_MS) return;
+    // Wait for the Add Task modal to close rather than stacking on top of it
+    if (!document.getElementById("backdrop").hidden) return;
+    clearInterval(timer);
+    showBriefing();
+  }, 500);
+
+  function showBriefing() {
+    const dialog = document.createElement("dialog");
+    dialog.className = "briefing";
+    dialog.setAttribute("aria-labelledby", "briefingTitle");
+
+    const tag = document.createElement("p");
+    tag.className = "briefing-tag";
+    tag.textContent = "Security notice";
+    const title = document.createElement("h2");
+    title.id = "briefingTitle";
+    title.textContent = "Company security briefing";
+    const body = document.createElement("p");
+    body.textContent = "All staff are expected to attend the company security briefing.";
+    const details = document.createElement("dl");
+    details.className = "briefing-details";
+    [["When", BRIEFING.when], ["Where", BRIEFING.where]].forEach(function (pair) {
+      const dt = document.createElement("dt");
+      dt.textContent = pair[0];
+      const dd = document.createElement("dd");
+      dd.textContent = pair[1];
+      details.append(dt, dd);
+    });
+    const actions = document.createElement("div");
+    actions.className = "form-actions";
+    const ok = document.createElement("button");
+    ok.type = "button";
+    ok.className = "btn";
+    ok.textContent = "Got it";
+    ok.addEventListener("click", function () { dialog.close(); });
+    actions.append(ok);
+
+    dialog.append(tag, title, body, details, actions);
+    dialog.addEventListener("close", function () { dialog.remove(); });
+    document.body.append(dialog);
+    dialog.showModal();
+    ok.focus();
+  }
+})();
+/* @hook security-briefing:js:end */
 </script>
 </body>
 </html>

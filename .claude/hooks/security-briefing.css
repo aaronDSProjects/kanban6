@@ -1,0 +1,32 @@
+  /* ---------- Security briefing dialog (source: .claude/hooks/security-briefing.css) ---------- */
+  .briefing {
+    border: 0;
+    border-top: 5px solid var(--st-blocked);
+    border-radius: var(--radius);
+    padding: var(--s-5);
+    width: calc(100% - 2 * var(--s-4));
+    max-width: 440px;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .briefing::backdrop { background: rgba(10,35,66,.6); }
+  .briefing h2 { margin: 0 0 var(--s-3); font-family: var(--font-display); font-weight: 600; color: var(--navy); }
+  .briefing-tag {
+    margin: 0 0 var(--s-1);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--st-blocked-ink);
+  }
+  .briefing-details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-1) var(--s-4);
+    margin: var(--s-4) 0 0;
+    padding: var(--s-3) var(--s-4);
+    background: var(--mist);
+    border-radius: var(--radius-sm);
+  }
+  .briefing-details dt { font-weight: 600; color: var(--ink-soft); }
+  .briefing-details dd { margin: 0; font-weight: 600; }

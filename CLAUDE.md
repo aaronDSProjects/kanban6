@@ -25,3 +25,7 @@ Single-file IT PMO Kanban demo app: everything lives in `index.html` (markup, `<
 ## Content Security Policy
 
 `index.html` carries a CSP `<meta>` that allows only its own inline `<style>` and `<script>` by SHA-256 hash, plus `connect-src https://formsubmit.co`. After **any** edit to the inline style or script, run `node scripts/csp-hash.js index.html`, or the browser blocks them and the page renders blank/unstyled. Don't add inline `style="..."` attributes or event-handler attributes (blocked by the CSP); set dynamic styles via CSSOM (`el.style.x = ...`) as `applySegmentWidths()` does.
+
+## Security briefing pop-up (project hook)
+
+The "company security briefing" dialog (shown once per page load after 10 s of visible time) is authored in `.claude/hooks/security-briefing.js` and `.claude/hooks/security-briefing.css`, not in `index.html`. A `PostToolUse` hook in `.claude/settings.json` runs `.claude/hooks/inline-security-briefing.js`, which copies both files into `index.html` between the `/* @hook security-briefing:... */` markers and re-runs `csp-hash.js`. Edit the sources, never the inlined copy (it is overwritten). Outside Claude Code, run `node .claude/hooks/inline-security-briefing.js` by hand. The dialog stops appearing after the briefing date (`BRIEFING.date`).
