@@ -1,7 +1,7 @@
 ---
 description: Security-scan the project, then push to GitHub, update README + repo About, and deploy GitHub Pages via Actions
 argument-hint: <owner/repo or GitHub URL> [branch=main] [visibility=public|private] [description="..."] [topics=a,b,c]
-allowed-tools: Bash(git:*), Bash(gh:*), Bash(grep:*), Bash(ls:*), Bash(cat:*), Bash(gitleaks:*), Read, Write, Edit, Glob, Grep, mcp__playwright__browser_navigate, mcp__playwright__browser_resize, mcp__playwright__browser_wait_for, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_close
+allowed-tools: Bash(git:*), Bash(gh:*), Bash(grep:*), Bash(ls:*), Bash(cat:*), Bash(gitleaks:*), Read, Write, Edit, Glob, Grep, mcp__playwright__browser_navigate, mcp__playwright__browser_resize, mcp__playwright__browser_wait_for, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_close, Bash(npx -y playwright@latest screenshot:*)
 ---
 
 # Publish to GitHub
@@ -111,9 +111,12 @@ then Phase 5.
 Uses the project-level `playwright` MCP server from `.mcp.json` (Edge, `file://` access allowed).
 Capture the **local** `index.html` so the image matches exactly what is being pushed.
 
-1. If the `mcp__playwright__*` tools are not available, tell the user to restart Claude Code and approve
-   the `playwright` server, then skip this phase (keep any existing `docs/screenshot.png`). Don't block
-   the publish on it.
+1. If the `mcp__playwright__*` tools are not available or fail to start (e.g. still running with old
+   `.mcp.json` args until Claude Code restarts), fall back to the Playwright CLI on Edge, then continue
+   from step 5:
+   `npx -y playwright@latest screenshot --channel msedge --viewport-size=1440,900 --wait-for-timeout=1000 "file:///<project path>/index.html" docs/screenshot.png`
+   If that also fails, tell the user to restart Claude Code and approve the `playwright` server, then
+   skip this phase (keep any existing `docs/screenshot.png`). Don't block the publish on it.
 2. `browser_resize` to 1440 × 900, then `browser_navigate` to
    `file:///<absolute path of the project, forward slashes, spaces as %20>/index.html`.
 3. `browser_wait_for` ~1 second, then `browser_snapshot` and check the page is in its default state:
