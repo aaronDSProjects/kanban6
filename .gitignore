@@ -1,0 +1,5 @@
+# Playwright MCP session output (snapshots, logs)
+.playwright-mcp/
+
+# Local-only Claude Code settings
+.claude/settings.local.json

@@ -4,6 +4,8 @@ A single-file Kanban board demo for an IT Project Management Office, built with 
 
 **Live demo:** https://aarondsprojects.github.io/kanban6/
 
+![IT PMO Kanban board with Backlog, In Progress, Blocked and Done columns](docs/screenshot.png)
+
 > Demo only: the bank is fictitious and the board lives in memory. It resets to the seeded data whenever you refresh the page.
 
 ## Features
